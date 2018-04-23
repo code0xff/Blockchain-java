@@ -1,14 +1,31 @@
 package java.core;
 
-import java.util.Date;
-
 public class Block {
 	private int version;
-	private String previousblockHash;
+	private Block previousblockHash;
 	private String merkleHash;
-	private Date time;
+	private long time;
 	private int bits;
-	private int nounce;
+	private int nonce;
+
+	private static Block genesisBlock;
+
+	private Block() {
+
+	}
+
+	public static Block createGenesisBlock() {
+		genesisBlock = new Block();
+
+		genesisBlock.setVersion(1);
+		genesisBlock.setPreviousblockHash(null);
+		genesisBlock.setMerkleHash(null);
+		genesisBlock.setTime(System.currentTimeMillis());
+		genesisBlock.setBits(10);
+		genesisBlock.setNonce(1);
+
+		return genesisBlock;
+	}
 
 	public int getVersion() {
 		return version;
@@ -18,11 +35,11 @@ public class Block {
 		this.version = version;
 	}
 
-	public String getPreviousblockHash() {
+	public Block getPreviousblockHash() {
 		return previousblockHash;
 	}
 
-	public void setPreviousblockHash(String previousblockHash) {
+	public void setPreviousblockHash(Block previousblockHash) {
 		this.previousblockHash = previousblockHash;
 	}
 
@@ -34,11 +51,11 @@ public class Block {
 		this.merkleHash = merkleHash;
 	}
 
-	public Date getTime() {
+	public long getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(long time) {
 		this.time = time;
 	}
 
@@ -50,17 +67,21 @@ public class Block {
 		this.bits = bits;
 	}
 
-	public int getNounce() {
-		return nounce;
+	public int getNonce() {
+		return nonce;
 	}
 
-	public void setNounce(int nounce) {
-		this.nounce = nounce;
+	public void setNonce(int nonce) {
+		this.nonce = nonce;
 	}
 
 	@Override
 	public String toString() {
 		return "Block [version=" + version + ", previousblockHash=" + previousblockHash + ", merkleHash=" + merkleHash
-				+ ", time=" + time + ", bits=" + bits + ", nounce=" + nounce + "]";
+				+ ", time=" + time + ", bits=" + bits + ", nonce=" + nonce + "]";
+	}
+
+	public void add(Block previousblockHash) {
+		this.previousblockHash = previousblockHash;
 	}
 }
