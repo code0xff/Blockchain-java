@@ -1,17 +1,16 @@
-package java.util;
+package block.util;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class SHA256 {
-	public String encode(String param) {
+	public String encode(byte[] param) {
 		MessageDigest digest = null;
 		String endcodedData = "";
 		try {
 			digest = MessageDigest.getInstance("SHA-256");
 
-			byte[] hash = digest.digest(param.getBytes("UTF-8"));
+			byte[] hash = digest.digest(param);
 			StringBuffer hexString = new StringBuffer();
 
 			for (int i = 0; i < hash.length; i++) {
@@ -22,7 +21,7 @@ public class SHA256 {
 			}
 
 			endcodedData = hexString.toString();
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
 		return endcodedData;
