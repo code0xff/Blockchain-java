@@ -1,6 +1,7 @@
 # Blockchain-java
 
-## 1. Blockchain-java는 Bitcoin 작동원리를 java로 해석하여 구현되었음
+## 1. Introduce
+### 1.1 Blockchain-java는 Bitcoin 작동원리를 java로 해석하여 구현되었음
 
 
 ## 2. Souce Code
