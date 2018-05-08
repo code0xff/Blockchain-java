@@ -3,7 +3,7 @@
 ## 1. Blockchain-java는 Bitcoin 작동원리를 java로 해석하여 구현되었음
 
 
-## 2. Introduce
+## 2. Souce Code
 ### 2.1. block/util/CommonUtil.java
     . 데이터간 형변환을 위한 기본적인 method 구현
 
