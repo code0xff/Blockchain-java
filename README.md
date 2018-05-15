@@ -1,6 +1,6 @@
 # Blockchain-java
 
-## 1. Introduce
+## 1. Intro
     . Blockchain-java는 Bitcoin header를 java로 해석하여 구현되었음
 
 
