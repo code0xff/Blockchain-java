@@ -34,12 +34,12 @@ public class Mining {
 		return inputSource;
 	}
 
-	// difficulty 연산
+	// get difficulty
 	public int getDifficulty(int bits) {
 		return 5;
 	}
 
-	// 새로운 block 생성
+	// create new block
 	public Block createBlock(Block previousBlock, String previousBlockHash) {
 		Block newBlock = new Block();
 		CommonUtil commonUtil = new CommonUtil();
@@ -55,7 +55,7 @@ public class Mining {
 		return newBlock;
 	}
 
-	// 새로운 block 생성
+	// mining block hash
 	public Block mining(Block lastBlock) {
 		SHA256 sha256 = new SHA256();
 		CommonUtil commonUtil = new CommonUtil();
@@ -68,10 +68,10 @@ public class Mining {
 			// second encoding by sha256
 			String sha256Second = sha256.encode(commonUtil.getBytesFromHex(new byte[32], sha256First));
 
-			// difficulty를 통과하는 hash값을 얻었는지 확인
+			// check hash
 			for (int count = 0; count < getDifficulty(lastBlock.getBits()); count++) {
 				if (sha256Second.charAt(sha256Second.length() - 1 - count) != '0') {
-					// 적절한 값이 아니면 nonce 증가시킨 후 다시 재연산
+					// if not proper hash, then check next nonce
 					lastBlock.setNonce(++nonce);
 					continue L;
 				}
