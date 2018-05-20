@@ -1,5 +1,7 @@
 package block.core;
 
+import java.math.BigInteger;
+
 import block.core.Block;
 import block.util.CommonUtil;
 import block.util.SHA256;
@@ -35,8 +37,25 @@ public class Mining {
 	}
 
 	// get difficulty
-	public int getDifficulty(int bits) {
-		return 5;
+	public float getDifficulty(int bits) {
+		BigInteger maximumTarget = getTargetValue(0x1d00ffff);
+		BigInteger currentTarget = getTargetValue(bits);
+
+		BigInteger diffculty = maximumTarget.divide(currentTarget);
+
+		System.out.println(diffculty);
+		return diffculty.intValue();
+	}
+
+	// get target value
+	public BigInteger getTargetValue(int bits) {
+		int dividedBits1 = ((bits >> 24) & 0xff);
+		int dividedBits2 = (bits & 0xffffff);
+
+		BigInteger currentTarget = BigInteger.valueOf(dividedBits2)
+				.multiply(BigInteger.valueOf(2).pow(8 * (dividedBits1 - 3)));
+
+		return currentTarget;
 	}
 
 	// create new block
