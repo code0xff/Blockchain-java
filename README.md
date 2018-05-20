@@ -17,11 +17,10 @@
     . Genesis Block 생성 함수
 
 ### 2.4. block/core/Mining.java
-    . Mining을 위한 기본 함수 구현
-    . Block 값을 이용한 sha256 encoding hash를 이용해 difficulty를 충족시키는 hash를 생성
-    . Difficulty 만족시 새로운 block 생성
+    . mining을 위한 기본 함수 구현
+    . Block 값을 이용한 sha256 encoding hash를 이용해 조건 만족하는지 확인
+    . 만족시 새로운 block 생성
 
 
 ## 3. Plan
-    . getDifficulty 함수 구현(현재 단순 int 값 return 형식으로 되어있음)
-    . Mining 시 Difficulty 충족된 경우 다른 Mining하는 Node에 현재 block에 대해 추가적인 Mining을 멈추고 다음 block에 대해 Mining하도록 알려주는 socket 통신 
+    . Mining 시 조건 충족된 경우 다른 Mining하는 Node에 현재 block에 대해 추가적인 Mining을 멈추고 다음 block에 대해 Mining하도록 알려주는 socket 통신 
