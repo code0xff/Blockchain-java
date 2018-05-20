@@ -1,13 +1,11 @@
 package block.core;
 
-import java.math.BigInteger;
-
 import block.core.Block;
 import block.util.CommonUtil;
 import block.util.SHA256;
 
 public class Mining {
-	// block¿¡ ÀúÀåµÈ data¸¦ ±â¹ÝÀ¸·Î byte ¹è¿­À» ÀÛ¼º
+	// blockì— ì €ìž¥ëœ dataë¥¼ ê¸°ë°˜ìœ¼ë¡œ byte ë°°ì—´ì„ ìž‘ì„±
 	public byte[] getBytesFromBlock(Block block) {
 		CommonUtil commonUtil = new CommonUtil();
 
@@ -36,26 +34,16 @@ public class Mining {
 		return inputSource;
 	}
 
-	// get difficulty
-	public float getDifficulty(int bits) {
-		BigInteger maximumTarget = getTargetValue(0x1d00ffff);
-		BigInteger currentTarget = getTargetValue(bits);
-
-		BigInteger diffculty = maximumTarget.divide(currentTarget);
-
-		System.out.println(diffculty);
-		return diffculty.intValue();
-	}
-
 	// get target value
-	public BigInteger getTargetValue(int bits) {
-		int dividedBits1 = ((bits >> 24) & 0xff);
-		int dividedBits2 = (bits & 0xffffff);
-
-		BigInteger currentTarget = BigInteger.valueOf(dividedBits2)
-				.multiply(BigInteger.valueOf(2).pow(8 * (dividedBits1 - 3)));
-
-		return currentTarget;
+	public byte[] getTarget(int bits) {
+		int digit = ((bits >> 24) & 0xff);
+		int value = (bits & 0xffffff);
+		
+		byte[] temp = new byte[32];
+		for (int i = 0; i < 3; i++) {
+			temp[32 - digit + i] = (byte) ((value >> (2 - i) * 8) & 0xff); 
+		}
+		return temp;
 	}
 
 	// create new block
@@ -80,24 +68,24 @@ public class Mining {
 		CommonUtil commonUtil = new CommonUtil();
 
 		int nonce = lastBlock.getNonce();
-
-		L: while (true) {
+		byte[] target = getTarget(lastBlock.getBits());
+		
+		while (true) {
 			// first encoding by sha256
 			String sha256First = sha256.encode(getBytesFromBlock(lastBlock));
 			// second encoding by sha256
 			String sha256Second = sha256.encode(commonUtil.getBytesFromHex(new byte[32], sha256First));
 
+			byte[] encodedHash = new byte[32];
+			encodedHash = commonUtil.getBytesFromReverseHex(encodedHash, sha256Second);
+			
 			// check hash
-			for (int count = 0; count < getDifficulty(lastBlock.getBits()); count++) {
-				if (sha256Second.charAt(sha256Second.length() - 1 - count) != '0') {
-					// if not proper hash, then check next nonce
-					lastBlock.setNonce(++nonce);
-					continue L;
-				}
+			if(commonUtil.byteCompare(target, encodedHash)) {
+				System.out.println("hit nonce: " + lastBlock.getNonce() + " blockHash: " + sha256Second);
+				return createBlock(lastBlock, sha256Second);
 			}
-			System.out.println("hit nonce: " + lastBlock.getNonce() + " blockHash: " + sha256Second);
-
-			return createBlock(lastBlock, sha256Second);
+			
+			lastBlock.setNonce(++nonce);
 		}
 	}
 }
