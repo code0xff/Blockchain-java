@@ -24,3 +24,4 @@
 
 ## 3. Plan
 - Mining 시 조건 충족된 경우 다른 Mining하는 Node에 현재 block에 대해 추가적인 Mining을 멈추고 다음 block에 대해 Mining하도록 알려주는 socket 통신 
+- source code 리팩토링 
