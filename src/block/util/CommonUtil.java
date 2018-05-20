@@ -26,4 +26,21 @@ public class CommonUtil {
 	public byte getByteFromInteger(int param, int pos) {
 		return (byte) ((param >>> 8 * pos) & 0xff);
 	}
+
+	public boolean byteCompare(byte[] target, byte[] encodedHash) {
+		for (int i = 0; i < 32; i++) {
+			int unsignedIntTarget = getUnsignedIntegerFromByte(target[i]);			
+			int unsignedIntHash = getUnsignedIntegerFromByte(encodedHash[i]);	
+			
+			if(unsignedIntTarget > unsignedIntHash) 
+				return true;
+			else if(unsignedIntTarget < unsignedIntHash) 
+				return false;
+		}
+		return true;
+	}
+	
+	public int getUnsignedIntegerFromByte(byte param) {
+		return (int) (param & 0xff);
+	}
 }
