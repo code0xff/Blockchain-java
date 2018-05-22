@@ -12,7 +12,7 @@ public class Block {
 
 	public Block genesisBlock;
 
-	// genesis block »ý¼º
+	// create genesis block 
 	public Block createGenesisBlock() {
 		CommonUtil hexUtil = new CommonUtil();
 
