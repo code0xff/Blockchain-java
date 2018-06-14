@@ -2,10 +2,10 @@ import java.util.LinkedList;
 import block.core.Block;
 import block.core.Mining;
 
-public class CreateBlockTest1 {
+public class CreateBlockTest {
 	public LinkedList<Block> chain = new LinkedList<Block>();
 
-	public CreateBlockTest1() {
+	public CreateBlockTest() {
 		execute();
 	}
 
@@ -27,6 +27,6 @@ public class CreateBlockTest1 {
 	}
 
 	public static void main(String[] args) {
-		CreateBlockTest1 createBlockTest = new CreateBlockTest1();
+		CreateBlockTest createBlockTest = new CreateBlockTest();
 	}
 }
