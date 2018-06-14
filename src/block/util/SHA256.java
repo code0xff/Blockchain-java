@@ -4,25 +4,27 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class SHA256 {
-	public String encode(byte[] param) {
-		MessageDigest digest = null;
-		String endcodedData = "";
+	final static String ALGORITHM = "SHA-256";
+	
+	public String encode(byte[] param) throws NoSuchAlgorithmException {
+		MessageDigest md;
+		String endcodedData = null;
 		try {
-			digest = MessageDigest.getInstance("SHA-256");
+			md = MessageDigest.getInstance(ALGORITHM);
 
-			byte[] hash = digest.digest(param);
+			byte[] hash = md.digest(param);
 			StringBuffer hexString = new StringBuffer();
 
 			for (int i = 0; i < hash.length; i++) {
 				String hex = Integer.toHexString(0xff & hash[i]);
-				if (hex.length() == 1)
+				if (hex.length() == 1) {
 					hexString.append('0');
+				}
 				hexString.append(hex);
 			}
-
 			endcodedData = hexString.toString();
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+			throw new NoSuchAlgorithmException(ALGORITHM + " is not a proper algorithm.");
 		}
 		return endcodedData;
 	}
